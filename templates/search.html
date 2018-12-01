@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Search
+{% endblock %}
+
+{% block main %}
+    <form action="/search" method="post">
+
+        <select required name="year">
+           <option selected disabled>Year</option>
+           {% for yr in yrs  %}
+              <option value="{{ yr }}">{{ yr }}</option>
+          {% endfor %}
+        </select>
+
+        <select required name="season">
+           <option selected disabled>Season</option>
+           {% for sz in szn  %}
+              <option value="{{ sz }}">{{ sz }}</option>
+          {% endfor %}
+        </select>
+
+        <select required name="college">
+           <option selected disabled>College</option>
+           {% for co in col  %}
+              <option value="{{ co }}">{{ co }}</option>
+          {% endfor %}
+        </select>
+
+        <select name="sport">
+           <option selected disabled>Sport</option>
+           {% for spor in sport  %}
+              <option value="{{ spor }}">{{ spor }}</option>
+          {% endfor %}
+        </select>
+
+        <button class="btn btn-primary" type="submit">Search</button>
+    </form>
+{% endblock %}
