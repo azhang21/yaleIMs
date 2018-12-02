@@ -1,45 +1,29 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Search
+    Searched
 {% endblock %}
 
 {% block main %}
-    <h8>
-        <b>
-            To find the IM Secretaries or Captains of particular sports of your relevant college, please fill out the form below.
-        </b>
-    </h8><br><br>
-    <form action="/search" method="post">
+    <body>
+        <center>
+            For {{ season }} {{ year }} in {{ college }} College, the position(s) for {{ position }} are:
+        </center>
+    </body>
 
-        <select required name="year">
-           <option selected disabled>Year</option>
-           {% for yr in yrs  %}
-              <option value="{{ yr }}">{{ yr }}</option>
+    <table class="table" style="width:100%">
+          <tr>
+            <th>{{ position }}</th>
+            <th>Email</th>
+          </tr>
+
+          {% for i in range(leng) %}
+            <tr>
+               <td>{{ names[i] }}</td>
+               <td>{{ emails[i] }}</td>
+            </tr>
           {% endfor %}
-        </select>
+    </table>
 
-        <select required name="season">
-           <option selected disabled>Season</option>
-           {% for sz in szn  %}
-              <option value="{{ sz }}">{{ sz }}</option>
-          {% endfor %}
-        </select>
 
-        <select required name="college">
-           <option selected disabled>College</option>
-           {% for co in col  %}
-              <option value="{{ co }}">{{ co }}</option>
-          {% endfor %}
-        </select>
-
-        <select required name="sport">
-           <option selected disabled>Sport</option>
-           {% for spor in sport  %}
-              <option value="{{ spor }}">{{ spor }}</option>
-          {% endfor %}
-        </select>
-
-        <button class="btn btn-primary" type="submit">Search</button>
-    </form>
 {% endblock %}
