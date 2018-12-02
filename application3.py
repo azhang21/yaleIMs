@@ -32,7 +32,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Configure CS50 Library to use SQLite database
-db = SQL("sqlite:///finance.db")
+db = SQL("sqlite:///yaleIMs.db")
 
 
 @app.route("/")
@@ -107,7 +107,7 @@ def delete():
 
     else:
         return render_template("delete.html")
-    
+
 
 @app.route("/updatestandings", methods=["GET", "POST"])
 @login_required
@@ -128,10 +128,14 @@ def updatestandings():
         points = int(request.form.get("points"))
 
         rows = db.execute("SELECT * FROM standings WHERE sport = :sport AND college = :college", sport=sport, college=college)
-        row = rows[0]
-        current = int(row['points'])
 
-        db.execute("UPDATE standings SET points = :points WHERE sport = :sport AND college = :college", points=current+points, sport=sport, college=college)
+        if len(rows) > 0:
+            row = rows[0]
+            current = int(row['points'])
+            db.execute("UPDATE standings SET points = :points WHERE sport = :sport AND college = :college", points=current+points, sport=sport, college=college)
+
+        else:
+            db.execute("INSERT INTO standings(college, sport, points) VALUES(:college, :sport, :points)", college=college, sport=sport, points=points)
 
         return redirect("/standings")
 
@@ -150,11 +154,7 @@ def standings():
 
         overall = db.execute("SELECT college,SUM(points) FROM standings GROUP BY college ORDER BY SUM(points)")
 
-        counter = 0
-        for i in range(14):
-            counter = counter+1
-
-        return render_template("standings.html", counter=counter, soccer=soccer, tabletennis=tabletennis, volleyball=volleyball, pickleball=pickleball, crosscountry=crosscountry)
+        return render_template("standings.html", soccer=soccer, tabletennis=tabletennis, volleyball=volleyball, pickleball=pickleball, crosscountry=crosscountry)
 
     else:
         return redirect("/standings")
@@ -220,7 +220,7 @@ def search():
 
         return render_template("search.html", yrs=yrs, szn=szn, col=col, sport=sport)
 
-    
+
 @app.route("/updatepage", methods=["GET", "POST"])
 @login_required
 def updatepage():
@@ -242,8 +242,8 @@ def updatepage():
 
     else:
         return redirect("/updatepage")
-    
-    
+
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Log IM secretary in"""
