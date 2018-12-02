@@ -6,14 +6,33 @@
 
 {% block main %}
     <form action="/updatepage" method="post">
-        <div class="form-group">
-            <select name="options">
+        <div class="form-group" align="center">
+            <p>
+                On this page, you can choose to update the points for each IM team, add and remove secs/captains.
+            </p>
+        </div>
+        <div class="form-group" align="center">
+            <label for="options">
+                <strong>
+                    <font size="4">
+                        I would like to:
+                    </font>
+                </strong>
+            </label>
+            <div class="col-sm-10">
+                <select name="options">
                 <option disabled selected value="options">Options</option>
                 <option value="points">Change points</option>
                 <option value="add">Add Secs/Captains</option>
                 <option value="delete">Remove Secs/Captains</option>
             </select>
+            </div>
         </div>
-        <button class="btn btn-primary" type="submit">Submit updates</button>
+        <div class="form-group" align="center">
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </div>
     </form>
 {% endblock %}
+
+
+
