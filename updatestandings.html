@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Update Standings
+{% endblock %}
+
+{% block main %}
+    <form action="/updatestandings" method="post">
+        <div class="form-group">
+            <select name="college">
+                <option disabled selected value="">College</option>
+                <option value="BK">Berkeley</option>
+                <option value="BR">Branford</option>
+                <option value="DC">Davenport</option>
+                <option value="BF">Franklin</option>
+                <option value="GH">Grace Hopper</option>
+                <option value="JE">Jonathan Edwards</option>
+                <option value="MC">Morse</option>
+                <option value="MY">Pauli Murray</option>
+                <option value="PC">Pierson</option>
+                <option value="SY">Saybrook</option>
+                <option value="SM">Silliman</option>
+                <option value="ES">Stiles</option>
+                <option value="TD">Timothy Dwight</option>
+                <option value="TC">Trumbull</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <select name="sport">
+                <option disabled selected value="">Sport</option>
+                <option value="soccer">Soccer</option>
+                <option value="table tennis">Table Tennis</option>
+                <option value="volleyball">Volleyball</option>
+                <option value="pickleball">Pickleball</option>
+                <option value="cross country">Cross Country</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <input autocomplete="off" class="form-control" name="points" placeholder="Points" type="integer">
+        </div>
+        <button class="btn btn-primary" type="submit">Submit updates</button>
+    </form>
+{% endblock %}
