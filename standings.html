@@ -1,0 +1,107 @@
+{% block title %}
+    College Standings
+{% endblock %}
+
+{% block main %}
+    <h1>
+        <link href="styles.css" rel="stylesheet">
+        Overall standings
+    </h1>
+    <table style="width:100%">
+        <tr>
+            <th>College</th>
+            <th>Points</th>
+        </tr>
+        {% for row in overall %}
+        <tr>
+            <td>{{ row['college'] }}</td>
+            <td>{{ row['points']}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>
+        <link href="styles.css" rel="stylesheet">
+        Soccer
+    </h2>
+    <table style="width:100%">
+        <tr>
+            <th>College</th>
+            <th>Points</th>
+        </tr>
+        {% for row in soccer %}
+        <tr>
+            <td>{{ row['college'] }}</td>
+            <td>{{ row['points']}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h3>
+        <link href="styles.css" rel="stylesheet">
+        Table Tennis
+    </h3>
+    <table style="width:100%">
+        <tr>
+            <th>College</th>
+            <th>Points</th>
+        </tr>
+        {% for row in tabletennis %}
+        <tr>
+            <td>{{ row['college'] }}</td>
+            <td>{{ row['points']}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h34>
+        <link href="styles.css" rel="stylesheet">
+        Volleyball
+    </h4>
+    <table style="width:100%">
+        <tr>
+            <th>College</th>
+            <th>Points</th>
+        </tr>
+        {% for row in volleyball %}
+        <tr>
+            <td>{{ row['college'] }}</td>
+            <td>{{ row['points']}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h5>
+        <link href="styles.css" rel="stylesheet">
+        Pickleball
+    </h5>
+    <table style="width:100%">
+        <tr>
+            <th>College</th>
+            <th>Points</th>
+        </tr>
+        {% for row in  %}
+        <tr>
+            <td>{{ row['college'] }}</td>
+            <td>{{ row['points']}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h6>
+        <link href="styles.css" rel="stylesheet">
+        Soccer
+    </h6>
+    <table style="width:100%">
+        <tr>
+            <th>College</th>
+            <th>Points</th>
+        </tr>
+        {% for row in soccer %}
+        <tr>
+            <td>{{ row['college'] }}</td>
+            <td>{{ row['points']}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
