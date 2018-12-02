@@ -41,73 +41,46 @@ def add():
     """Add IM Secretary or Captain"""
     if request.method == "POST":
 
-        # Ensure "symbol" isn't blank
-        if not request.form.get("symbol"):
-            return apology("must provide symbol", 403)
+        # Ensure "year" isn't blank
+        if not request.form.get("year"):
+            return apology("must select year", 403)
 
-        # Ensure "symbol" exists
-        quote = lookup(request.form.get("symbol"))
-        if not quote:
-            return apology("invalid symbol", 400)
+        # Ensure "season" isn't blank
+        if not request.form.get("season"):
+            return apology("must select season", 403)
 
-        # ensure "shares" isn't blank
-        if not request.form.get("shares"):
-            return apology("must provide shares", 400)
+        # ensure "college" isn't blank
+        if not request.form.get("college"):
+            return apology("must select college", 403)
 
-        # ensure "shares" is a positive integer
-        if not (request.form.get("shares")).isdigit():
-            return apology("shares not a number", 400)
+        # ensure "name" isn't blank
+        if not request.form.get("name"):
+            return apology("must provide name", 403)
 
-        if int(request.form.get("shares")) < 1:
-            return apology("shares not positive", 400)
+        # ensure "email" isn't blank
+        if not request.form.get("email"):
+            return apology("must provide email", 403)
 
-        # check that user has enough cash to complete transaction
-        money = db.execute("SELECT cash FROM users WHERE id=:id", id=session["user_id"])
-        if (quote["price"] * float(request.form.get("shares"))) > money[0]["cash"]:
-            return apology("Not enough cash to complete purchase", 400)
+        # ensure "sport" isn't blank
+        if not request.form.get("sport"):
+            return apology("must select sport", 403)
 
-        # after validation, buy
-        sold = db.execute("INSERT INTO histories (id, symbol, name, shares, price, total) VALUES (:id, :symbol, :name, :shares, :price, :total)",
-                          id=session["user_id"], symbol=quote["symbol"], name=quote["name"], shares=request.form.get("shares"),
-                          price=quote["price"], total=float(request.form.get("shares"))*quote["price"])
+        # add into database
+        # add as IM secretary
+        if request.form.get("sport") == "n-a":
+            add = db.execute("INSERT INTO contacts (year, season, college, imsec, imsec_email) VALUES (:yr, :szn, :col, :name, :email)",
+                              yr=request.form.get("year"), szn=request.form.get("season"), col=request.form.get("college"),
+                              name=request.form.get("name"), email=request.form.get("email"))
+        # add as captain
+        else:
+            add = db.execute("INSERT INTO contacts (year, season, college, sport, captain, captain_email) VALUES (:yr, :szn, :col, :spo, :name, :email)",
+                              yr=request.form.get("year"), szn=request.form.get("season"), col=request.form.get("college"),
+                              spo=request.form.get("sport"), name=request.form.get("name"), email=request.form.get("email"))
 
-        # subtract from cash
-        subtract = db.execute("UPDATE users SET cash=:cash WHERE id=:id", id=session["user_id"], cash=(
-                              money[0]["cash"]-quote["price"] * float(request.form.get("shares"))))
-
-        return redirect("/")
+        return redirect("/imsecHome")
 
     else:
-        return render_template("buy.html")
-
-### incorporate only if finish everything else: check if IM Sec / captain email already entered, jsonify v v confusing tho
-@app.route("/check", methods=["GET"])
-def check():
-    """Return true if username available, else false, in JSON format"""
-    user = request.args.get('username')
-    belong = db.execute("SELECT * FROM users WHERE username=:username",
-                        username=user)
-
-    # ensure username is at least one character and not in database
-    if len(user) < 1 or belong:
-        return jsonify(False)
-    else:
-        return jsonify(True)
-
-
-@app.route("/history")
-def subset():
-    """Show subset of database according to college / year / season / sport"""
-    # create subset of 'histories' that belongs to user
-    portfolios = db.execute("SELECT symbol, shares, price, transacted FROM histories WHERE id=:id", id=session["user_id"])
-
-    return render_template("history.html", portfolios=portfolios)
-
-
-@app.route("/imsecHome", methods=["GET"])
-@login_required
-def imsecHome():
-    """Page where IM Sec selects what they want to update - points or contact info"""
+        return render_template("add.html")
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -172,15 +145,22 @@ def search():
         # submit user's input to /searched
         if imsecs and captains:
             secs = []
-            secEmails = []
             for imsec in imsecs:
-                secs.append(imsecs["imsec"])
-                secEmails.append(imsecs["imsec_email"])
+                secs.append(imsecs["imsec"]["imsec_email"])
 
             caps = []
-            return render_template("searched.html", name=quote["name"], symbol=quote["symbol"], price=usd(quote["price"]))
-        else if imsecs:
-            return render_template("searched.html", )
+            for cap in captains:
+                caps.append(captains["captain"]["captain_email"])
+
+            return render_template("searched.html", season=request.form.get("season"), year=request.form.get("year"),
+                                   college=request.form.get("college"), sport=request.form.get("sport"), secs=secs, caps=caps)
+        if imsecs:
+            secs = []
+            for imsec in imsecs:
+                secs.append(imsecs["imsec"]["imsec_email"])
+
+            return render_template("searched1.html", season=request.form.get("season"), year=request.form.get("year"),
+                                   college=request.form.get("college"), sport=request.form.get("sport"), secs=secs)
         else:
             return apology("invalid combination", 400)
 
@@ -205,50 +185,25 @@ def search():
         return render_template("search.html", yrs=yrs, szn=szn, col=col, sport=sport)
 
 
-@app.route("/buy", methods=["GET", "POST"])
+@app.route("/delete", methods=["GET", "POST"])
 @login_required
-def update():
-    """Buy shares of stock"""
+def delete():
+    """Obtain a list of IM Secs and/or Captains to eventually delete"""
     if request.method == "POST":
 
-        # Ensure "symbol" isn't blank
-        if not request.form.get("symbol"):
-            return apology("must provide symbol", 403)
+        # Ensure email, sport selections were made
+        if not request.form.get("email") or not request.form.get("sport"):
+            return apology("must provide email/sport", 403)
 
-        # Ensure "symbol" exists
-        quote = lookup(request.form.get("symbol"))
-        if not quote:
-            return apology("invalid symbol", 400)
+        # Ensure combination of year, season, college exists - get im secretaries
+        delete = db.execute("DELETE * FROM contacts WHERE email=:email AND sport=:sport",
+                           email=request.form.get("email"), sport=request.form.get("sport"))
 
-        # ensure "shares" isn't blank
-        if not request.form.get("shares"):
-            return apology("must provide shares", 400)
-
-        # ensure "shares" is a positive integer
-        if not (request.form.get("shares")).isdigit():
-            return apology("shares not a number", 400)
-
-        if int(request.form.get("shares")) < 1:
-            return apology("shares not positive", 400)
-
-        # check that user has enough cash to complete transaction
-        money = db.execute("SELECT cash FROM users WHERE id=:id", id=session["user_id"])
-        if (quote["price"] * float(request.form.get("shares"))) > money[0]["cash"]:
-            return apology("Not enough cash to complete purchase", 400)
-
-        # after validation, buy
-        sold = db.execute("INSERT INTO histories (id, symbol, name, shares, price, total) VALUES (:id, :symbol, :name, :shares, :price, :total)",
-                          id=session["user_id"], symbol=quote["symbol"], name=quote["name"], shares=request.form.get("shares"),
-                          price=quote["price"], total=float(request.form.get("shares"))*quote["price"])
-
-        # subtract from cash
-        subtract = db.execute("UPDATE users SET cash=:cash WHERE id=:id", id=session["user_id"], cash=(
-                              money[0]["cash"]-quote["price"] * float(request.form.get("shares"))))
-
-        return redirect("/")
+        if not delete:
+            return apology("person does not exist in database", 403)
 
     else:
-        return render_template("buy.html")
+        return render_template("delete.html")
 
 
 def errorhandler(e):
