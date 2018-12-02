@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Update Information
+{% endblock %}
+
+{% block main %}
+    <form action="/updatepage" method="post">
+        <div class="form-group">
+            <select name="options">
+                <option disabled selected value="options">Options</option>
+                <option value="points">Change points</option>
+                <option value="add">Add Secs/Captains</option>
+                <option value="delete">Remove Secs/Captains</option>
+            </select>
+        </div>
+        <button class="btn btn-primary" type="submit">Submit updates</button>
+    </form>
+{% endblock %}
