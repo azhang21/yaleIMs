@@ -40,6 +40,61 @@ def index():
     return render_template("homepage.html")
 
 
+@app.route("/photos")
+def photos():
+    return render_template("photos.html")
+
+
+@app.route("/overview")
+def overview():
+    return render_template("overview.html")
+
+
+@app.route("/tyng")
+def tyng():
+    return render_template("tyng.html")
+
+
+@app.route("/eligibility")
+def eligibility():
+    return render_template("eligibility.html")
+
+
+@app.route("/organization")
+def organization():
+    return render_template("organization.html")
+
+
+@app.route("/employment")
+def employment():
+    return render_template("employment.html")
+
+
+@app.route("/history")
+def history():
+    return render_template("history.html")
+
+
+@app.route("/archives")
+def archives():
+    return render_template("archives.html")
+
+
+@app.route("/directions")
+def directions():
+    return render_template("directions.html")
+
+
+@app.route("/imfields")
+def imfields():
+    return render_template("imfields.html")
+
+
+@app.route("/rules")
+def rules():
+    return render_template("rules.html")
+
+
 @app.route("/add", methods=["GET", "POST"])
 @login_required
 def add():
