@@ -217,16 +217,15 @@ def delete():
 @app.route("/standings")
 def standings():
 
-    soccer = db.execute("SELECT * FROM standings ORDER BY points WHERE sport = :sport", sport="soccer")
-    tabletennis = db.execute("SELECT * FROM standings ORDER BY points WHERE sport = :sport", sport="tabletennis")
-    volleyball = db.execute("SELECT * FROM standings ORDER BY points WHERE sport = :sport", sport="volleyball")
-    pickleball = db.execute("SELECT * FROM standings ORDER BY points WHERE sport = :sport", sport="pickleball")
-    crosscountry = db.execute("SELECT * FROM standings ORDER BY points WHERE sport = :sport", sport="crosscountry")
+    soccer = db.execute("SELECT * FROM standings WHERE sport = 'soccer' ORDER BY -points")
+    tabletennis = db.execute("SELECT * FROM standings WHERE sport = 'table tennis' ORDER BY -points")
+    volleyball = db.execute("SELECT * FROM standings WHERE sport = 'volleyball' ORDER BY -points")
+    pickleball = db.execute("SELECT * FROM standings WHERE sport = 'pickleball' ORDER BY -points")
+    crosscountry = db.execute("SELECT * FROM standings WHERE sport = 'cross country' ORDER BY -points")
 
-    overall = db.execute("SELECT college,SUM(points) FROM standings GROUP BY college ORDER BY SUM(points)")
+    overall = db.execute("SELECT college,SUM(points) FROM standings GROUP BY college ORDER BY -SUM(points)")
 
     return render_template("standings.html", soccer=soccer, tabletennis=tabletennis, volleyball=volleyball, pickleball=pickleball, crosscountry=crosscountry, overall=overall)
-
 
 
 @app.route("/updatepage", methods=["GET", "POST"])
