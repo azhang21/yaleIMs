@@ -1,17 +1,57 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Buy
+    Add
 {% endblock %}
 
 {% block main %}
-    <form action="/buy" method="post">
-        <div class="form-group">
-            <input autocomplete="off" autofocus class="form-control" name="symbol" placeholder="Symbol" type="text">
+    <form action="/add" method="post">
+
+        <select required name="year">
+          <option selected disabled>Year</option>
+          <option value="2018">2018</option>
+        </select>
+
+        <select required name="season">
+          <option selected disabled>Season</option>
+          <option value="Fall">Fall</option>
+        </select>
+
+        <select required name="college">
+          <option selected disabled>College</option>
+          <option value="FR">Benjamin Franklin</option>
+          <option value="BK">Berkeley</option>
+          <option value="BR">Branford</option>
+          <option value="DC">Davenport</option>
+          <option value="ES">Ezra Stiles</option>
+          <option value="GH">Grace Hopper</option>
+          <option value="JE">Jonathan Edwards</option>
+          <option value="MC">Morse</option>
+          <option value="MY">Pauli Murray</option>
+          <option value="PC">Pierson</option>
+          <option value="SY">Saybrook</option>
+          <option value="TD">Timothy Dwight</option>
+          <option value="TR">Trumbull</option>
+        </select>
+        <br><br>
+        <div required class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="name" placeholder="Full Name" type="text">
         </div>
-        <div class="form-group">
-            <input class="form-control" name="shares" placeholder="Shares" type="number" step = "1">
+
+        <div required class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="email" placeholder="Email" type="text">
         </div>
-        <button class="btn btn-primary" type="submit">Buy</button>
+
+        <select required name="sport">
+            <option selected disabled>Sport</option>
+            <option value="N-A">N-A, IM Secretary</option>
+            <option value="Soccer">COED Soccer, Captain</option>
+            <option value="Table Tennis">COED Table Tennis, Captain</option>
+            <option value="Volleyball">COED Volleyball, Captain</option>
+            <option value="Pickleball">COED Pickleball, Captain</option>
+            <option value="Cross Country">COED Cross Country, Captain</option>
+        </select>
+
+        <button class="btn btn-primary" type="submit">Add</button>
     </form>
 {% endblock %}
