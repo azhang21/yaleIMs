@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Delete
+{% endblock %}
+
+{% block main %}
+    <form action="/delete" method="post">
+
+        <div required class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="email" placeholder="Email" type="text">
+        </div>
+
+        <select required name="sport">
+            <option selected disabled>Sport</option>
+            <option value="n-a">N-A, IM Secretary</option>
+            <option value="soc">COED Soccer, Captain</option>
+            <option value="tt">COED Table Tennis, Captain</option>
+            <option value="vol">COED Volleyball, Captain</option>
+            <option value="pic">COED Pickleball, Captain</option>
+            <option value="cc">COED Cross Country, Captain</option>
+        </select>
+
+        <button class="btn btn-primary" type="submit">Delete</button>
+    </form>
+{% endblock %}
