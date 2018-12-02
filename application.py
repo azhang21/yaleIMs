@@ -83,6 +83,27 @@ def add():
         return render_template("add.html")
 
 
+@app.route("/delete", methods=["GET", "POST"])
+@login_required
+def delete():
+    """Obtain a list of IM Secs and/or Captains to eventually delete"""
+    if request.method == "POST":
+
+        # Ensure email, sport selections were made
+        if not request.form.get("email") or not request.form.get("sport"):
+            return apology("must provide email/sport", 403)
+
+        # Ensure combination of year, season, college exists - get im secretaries
+        delete = db.execute("DELETE * FROM contacts WHERE email=:email AND sport=:sport",
+                           email=request.form.get("email"), sport=request.form.get("sport"))
+
+        if not delete:
+            return apology("person does not exist in database", 403)
+
+    else:
+        return render_template("delete.html")
+    
+    
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Log IM secretary in"""
@@ -183,27 +204,6 @@ def search():
                 sport.append(contacts["sport"])
 
         return render_template("search.html", yrs=yrs, szn=szn, col=col, sport=sport)
-
-
-@app.route("/delete", methods=["GET", "POST"])
-@login_required
-def delete():
-    """Obtain a list of IM Secs and/or Captains to eventually delete"""
-    if request.method == "POST":
-
-        # Ensure email, sport selections were made
-        if not request.form.get("email") or not request.form.get("sport"):
-            return apology("must provide email/sport", 403)
-
-        # Ensure combination of year, season, college exists - get im secretaries
-        delete = db.execute("DELETE * FROM contacts WHERE email=:email AND sport=:sport",
-                           email=request.form.get("email"), sport=request.form.get("sport"))
-
-        if not delete:
-            return apology("person does not exist in database", 403)
-
-    else:
-        return render_template("delete.html")
 
 
 def errorhandler(e):
