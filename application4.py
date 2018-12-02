@@ -279,7 +279,7 @@ def updatestandings():
         else:
             db.execute("INSERT INTO standings(college, sport, points) VALUES(:college, :sport, :points)", college=college, sport=sport, points=points)
 
-        return render_template("standings.html")
+        return redirect("/standings")
 
     else:
         return render_template("updatestandings.html")
