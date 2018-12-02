@@ -1,3 +1,15 @@
+p
+{
+    max-width: 800px;
+    text-align: justify;
+}
+
+ol
+{
+    max-width: 675px;
+    text-align: justify;
+}
+
 nav .navbar-brand
 {
     /* size for brand */
