@@ -1,14 +1,45 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Quoted
+    Search
 {% endblock %}
 
 {% block main %}
-    <body>
-        <center>
-            For {{ season }} {{ year }} in {{ college }} College, the IM Secretaries are:
-        </center>
-    </body>
+    <h8>
+        <b>
+            To find the IM Secretaries or Captains of particular sports of your relevant college, please fill out the form below.
+        </b>
+    </h8><br><br>
+    <form action="/search" method="post">
 
+        <select required name="year">
+           <option selected disabled>Year</option>
+           {% for yr in yrs  %}
+              <option value="{{ yr }}">{{ yr }}</option>
+          {% endfor %}
+        </select>
+
+        <select required name="season">
+           <option selected disabled>Season</option>
+           {% for sz in szn  %}
+              <option value="{{ sz }}">{{ sz }}</option>
+          {% endfor %}
+        </select>
+
+        <select required name="college">
+           <option selected disabled>College</option>
+           {% for co in col  %}
+              <option value="{{ co }}">{{ co }}</option>
+          {% endfor %}
+        </select>
+
+        <select required name="sport">
+           <option selected disabled>Sport</option>
+           {% for spor in sport  %}
+              <option value="{{ spor }}">{{ spor }}</option>
+          {% endfor %}
+        </select>
+
+        <button class="btn btn-primary" type="submit">Search</button>
+    </form>
 {% endblock %}
