@@ -1,107 +1,126 @@
+{% extends "layout.html" %}
+
 {% block title %}
     College Standings
 {% endblock %}
 
 {% block main %}
-    <h1>
-        <link href="styles.css" rel="stylesheet">
-        Overall standings
-    </h1>
-    <table style="width:100%">
-        <tr>
+    <P align="center" style="font size: 20 px">
+        <strong>
+            <font size="6">
+                Yale IMs College Standings
+            </font>
+        </strong>
+    </p>
+    <div>
+    <h3>Overall Standings</h3>
+    <table class="table table-striped">
+        <thead>
             <th>College</th>
             <th>Points</th>
-        </tr>
-        {% for row in overall %}
-        <tr>
-            <td>{{ row['college'] }}</td>
-            <td>{{ row['points']}}</td>
-        </tr>
-        {% endfor %}
+        </thead>
+        <tbody>
+            {% for row in overall %}
+            <tr>
+                <td width="25%">{{ row['college'] }}</td>
+                <td width="25%">{{ row['SUM(points)'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
 
-    <h2>
-        <link href="styles.css" rel="stylesheet">
-        Soccer
-    </h2>
-    <table style="width:100%">
-        <tr>
+    <hr style="border-bottom: 2px solid #000;">
+
+    <div>
+    <h3>Soccer</h3>
+    <table class="table table-striped">
+        <thead>
             <th>College</th>
             <th>Points</th>
-        </tr>
-        {% for row in soccer %}
-        <tr>
-            <td>{{ row['college'] }}</td>
-            <td>{{ row['points']}}</td>
-        </tr>
-        {% endfor %}
+        </thead>
+        <tbody>
+            {% for row in soccer %}
+            <tr>
+                <td width="25%">{{ row['college'] }}</td>
+                <td width="25%">{{ row['points'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
 
-    <h3>
-        <link href="styles.css" rel="stylesheet">
-        Table Tennis
-    </h3>
-    <table style="width:100%">
-        <tr>
+    <hr style="border-bottom: 2px solid #000;">
+
+    <div class="w3-container">
+    <h3>Table Tennis</h3>
+    <table class="table table-striped">
+        <thead>
             <th>College</th>
             <th>Points</th>
-        </tr>
-        {% for row in tabletennis %}
-        <tr>
-            <td>{{ row['college'] }}</td>
-            <td>{{ row['points']}}</td>
-        </tr>
-        {% endfor %}
+        </thead>
+        <tbody>
+            {% for row in tabletennis %}
+            <tr>
+                <td width="25%">{{ row['college'] }}</td>
+                <td width="25%">{{ row['points'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
 
-    <h34>
-        <link href="styles.css" rel="stylesheet">
-        Volleyball
-    </h4>
-    <table style="width:100%">
-        <tr>
+    <hr style="border-bottom: 2px solid #000;">
+
+    <div>
+    <h3>Volleyball</h3>
+    <table class="table table-striped">
+        <thead>
             <th>College</th>
             <th>Points</th>
-        </tr>
-        {% for row in volleyball %}
-        <tr>
-            <td>{{ row['college'] }}</td>
-            <td>{{ row['points']}}</td>
-        </tr>
-        {% endfor %}
+        </thead>
+        <tbody>
+            {% for row in volleyball %}
+            <tr>
+                <td width="25%">{{ row['college'] }}</td>
+                <td width="25%">{{ row['points'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
 
-    <h5>
-        <link href="styles.css" rel="stylesheet">
-        Pickleball
-    </h5>
-    <table style="width:100%">
-        <tr>
+    <hr style="border-bottom: 2px solid #000;">
+
+    <div>
+    <h3>Pickleball</h3>
+    <table class="table table-striped">
+        <thead>
             <th>College</th>
             <th>Points</th>
-        </tr>
-        {% for row in  %}
-        <tr>
-            <td>{{ row['college'] }}</td>
-            <td>{{ row['points']}}</td>
-        </tr>
-        {% endfor %}
+        </thead>
+        <tbody>
+            {% for row in pickleball %}
+            <tr>
+                <td width="25%">{{ row['college'] }}</td>
+                <td width="25%">{{ row['points'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
 
-    <h6>
-        <link href="styles.css" rel="stylesheet">
-        Soccer
-    </h6>
-    <table style="width:100%">
-        <tr>
+    <hr style="border-bottom: 2px solid #000;">
+
+    <div>
+    <h3>Cross Country</h3>
+    <table class="table table-striped">
+        <thead>
             <th>College</th>
             <th>Points</th>
-        </tr>
-        {% for row in soccer %}
-        <tr>
-            <td>{{ row['college'] }}</td>
-            <td>{{ row['points']}}</td>
-        </tr>
-        {% endfor %}
+        </thead>
+        <tbody>
+            {% for row in crosscountry %}
+            <tr>
+                <td width="25%">{{ row['college'] }}</td>
+                <td width="25%">{{ row['points'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
 {% endblock %}
