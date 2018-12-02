@@ -5,6 +5,11 @@
 {% endblock %}
 
 {% block main %}
+    <h8>
+        <b>
+            To find the IM Secretaries or Captains of particular sports of your relevant college, please fill out the form below.
+        </b>
+    </h8><br><br>
     <form action="/search" method="post">
 
         <select required name="year">
@@ -28,7 +33,7 @@
           {% endfor %}
         </select>
 
-        <select name="sport">
+        <select required name="sport">
            <option selected disabled>Sport</option>
            {% for spor in sport  %}
               <option value="{{ spor }}">{{ spor }}</option>
