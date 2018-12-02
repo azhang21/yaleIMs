@@ -220,7 +220,30 @@ def search():
 
         return render_template("search.html", yrs=yrs, szn=szn, col=col, sport=sport)
 
+    
+@app.route("/updatepage", methods=["GET", "POST"])
+@login_required
+def updatepage():
+    if request.method == "POST":
 
+        if not request.form.get("options"):
+            return apology("must choose an option", 400)
+
+        option = request.form.get("options")
+
+        if option == "points":
+            return render_template("updatestandings.html")
+
+        if option == "add":
+            return render_template("add.html")
+
+        if option == "delete":
+            return render_template("delete.html")
+
+    else:
+        return redirect("/updatepage")
+    
+    
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Log IM secretary in"""
